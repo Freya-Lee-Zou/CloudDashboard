@@ -155,14 +155,19 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen overflow-hidden bg-[#010b13] text-emerald-100">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 top-12 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl sm:-left-20 sm:h-96 sm:w-96" />
+        <div className="absolute right-[-10%] top-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl sm:h-[28rem] sm:w-[28rem]" />
+        <div className="absolute inset-x-[-30%] bottom-[-40%] h-[36rem] rounded-full bg-[radial-gradient(circle_at_center,_rgba(8,56,40,0.35),_transparent_70%)] blur-2xl" />
+      </div>
+      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-6 text-center px-4 relative pt-12 sm:pt-16">
+        <div className="relative mb-6 px-4 pt-12 text-center sm:pt-16">
           {onOpenRegions && (
             <button
               onClick={onOpenRegions}
-              className="absolute top-2 right-4 sm:right-8 sm:top-4 flex items-center gap-2 px-3 sm:px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105 z-10"
+              className="absolute right-4 top-2 z-10 flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-3 py-2 font-semibold text-emerald-100 transition-all hover:-translate-y-0.5 hover:border-emerald-400/70 hover:bg-emerald-500/25 hover:text-emerald-50 hover:shadow-[0_15px_35px_rgba(57,255,159,0.25)] sm:right-8 sm:top-4 sm:px-4"
               title="Explore AWS Regions"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,18 +177,18 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
               <span className="sm:hidden">Regions</span>
             </button>
           )}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-gray-900 mb-3 break-words">
-            Who Controls <span className="text-orange-500">The Internet?</span>
+          <h1 className="mb-3 break-words text-4xl font-black tracking-tight text-emerald-100 sm:text-5xl lg:text-6xl">
+            Who Controls <span className="text-[#39ff9f]">The Internet?</span>
           </h1>
-          <p className="text-gray-600 text-base sm:text-lg px-2">
+          <p className="px-2 text-base text-emerald-200/80 sm:text-lg">
             When AWS goes down, Netflix, Reddit, and Slack go with it.
           </p>
         </div>
 
         {/* Single Search Bar */}
-        <div className="mb-6 max-w-2xl mx-auto px-4">
+        <div className="mx-auto mb-6 max-w-2xl px-4">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
+            <Search className="absolute left-4 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-emerald-400/80" />
             <Input
               type="text"
               placeholder="Search companies or add new ones (e.g., 'Netflix' or 'stripe.com')..."
@@ -195,7 +200,7 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                   handleAddCompany()
                 }
               }}
-              className="pl-12 pr-12 h-14 border-2 border-gray-300 text-base bg-white shadow-lg rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+              className="h-14 rounded-xl border-2 border-emerald-500/25 bg-[#041612]/90 pl-12 pr-12 text-lg text-emerald-100 shadow-[0_25px_60px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-all placeholder:text-emerald-200/40 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40"
             />
             {searchQuery && (
               <button
@@ -203,39 +208,40 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                   setSearchQuery("")
                   setSelectedProvider(null)
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-gray-100 transition-colors z-10"
+                className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-1 transition-colors hover:bg-emerald-500/15"
                 aria-label="Clear search"
               >
-                <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                <X className="h-5 w-5 text-emerald-300 hover:text-emerald-100" />
               </button>
             )}
           </div>
           {detectionError && (
-            <div className="mt-2 text-sm text-red-600 text-center">{detectionError}</div>
+            <div className="mt-2 text-center text-sm text-red-400">{detectionError}</div>
           )}
         </div>
 
         {/* Provider Filter Pills with LOGOS */}
-        <div className="mb-6 flex flex-wrap gap-3 justify-center px-4">
+        <div className="mb-8 flex flex-wrap justify-center gap-3 px-4">
           {Object.entries(providerCounts)
             .sort((a, b) => b[1] - a[1])
             .map(([provider, count]) => {
               const isSelected = selectedProvider === provider
               const logo = PROVIDER_LOGOS[provider as keyof typeof PROVIDER_LOGOS]
               const displayName = PROVIDER_DISPLAY_NAMES[provider as keyof typeof PROVIDER_DISPLAY_NAMES] || provider
+              const color = COLORS[provider as keyof typeof COLORS] || COLORS.Other
               return (
                 <button
                   key={provider}
-                  className={`px-4 py-2.5 rounded-xl font-semibold transition-all border-2 flex items-center gap-2 ${
-                    isSelected 
-                      ? "ring-4 ring-offset-2 scale-105 shadow-xl transform" 
-                      : "hover:scale-105 hover:shadow-lg shadow-md"
+                  className={`relative flex items-center gap-2 rounded-xl border-2 px-4 py-2.5 font-semibold transition-all ${
+                    isSelected
+                      ? "scale-[1.03] shadow-[0_18px_45px_rgba(0,0,0,0.55)]"
+                      : "hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(0,0,0,0.45)]"
                   }`}
                   style={{
-                    backgroundColor: isSelected ? COLORS[provider as keyof typeof COLORS] : "white",
-                    borderColor: COLORS[provider as keyof typeof COLORS],
-                    borderWidth: isSelected ? "3px" : "2px",
-                    color: isSelected ? "white" : COLORS[provider as keyof typeof COLORS],
+                    backgroundColor: isSelected ? color : "rgba(4, 22, 18, 0.94)",
+                    borderColor: color,
+                    color: isSelected ? "#02110b" : color,
+                    boxShadow: isSelected ? `0 0 32px ${color}55` : undefined,
                   }}
                   onClick={() => setSelectedProvider(isSelected ? null : provider)}
                   onMouseEnter={() => setHoveredProvider(provider)}
@@ -248,7 +254,7 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                       src={logo} 
                       alt={provider} 
                       className="h-5 w-auto flex-shrink-0" 
-                      style={{ filter: isSelected ? "brightness(0) invert(1)" : "none" }}
+                      style={{ filter: isSelected ? "brightness(0) invert(1)" : "drop-shadow(0 0 6px rgba(57,255,159,0.35))" }}
                       onError={(e) => {
                         e.currentTarget.style.display = 'none'
                       }}
@@ -258,7 +264,7 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                   <span className="text-xs opacity-75 whitespace-nowrap">({count})</span>
                   {isSelected && (
                     <X 
-                      className="h-4 w-4 ml-1 opacity-75 hover:opacity-100" 
+                      className="ml-1 h-4 w-4 text-[#02110b]/80 opacity-90 hover:opacity-100" 
                       onClick={(e) => {
                         e.stopPropagation()
                         setSelectedProvider(null)
@@ -271,10 +277,10 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
         </div>
 
         {/* Main Visualization */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Pie Chart with Hover */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Cloud Provider Market Share</h2>
+          <div className="rounded-2xl border border-emerald-500/20 bg-[#031a15]/90 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.55)] backdrop-blur-sm">
+            <h2 className="mb-4 text-center text-2xl font-bold text-emerald-50">Cloud Provider Market Share</h2>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -308,21 +314,30 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                     />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#041a14",
+                    border: "1px solid rgba(57,255,159,0.35)",
+                    borderRadius: 12,
+                    color: "#e6ffe9",
+                    boxShadow: "0 18px 40px rgba(0,0,0,0.45)",
+                  }}
+                  itemStyle={{ color: "#e6ffe9" }}
+                />
               </PieChart>
             </ResponsiveContainer>
             <div className="mt-4 text-center">
-              <div className="text-6xl font-black text-blue-600">
+              <div className="text-6xl font-black text-[#39ff9f]">
                 {Math.round(((providerCounts["AWS"] || 0) + (providerCounts["Azure"] || 0) + (providerCounts["GCP"] || 0)) / allCompanies.length * 100)}%
               </div>
-              <div className="text-sm text-gray-600 font-medium">The Big 3 Control Everything</div>
+              <div className="text-sm font-medium text-emerald-200/70">The Big 3 Control Everything</div>
             </div>
           </div>
 
           {/* All Company Logos - Scrollable */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-gray-200">
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <div className="rounded-2xl border border-emerald-500/20 bg-[#031a15]/90 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.55)] backdrop-blur-sm">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-xl font-bold text-emerald-50 sm:text-2xl">
                 {hoveredProvider || selectedProvider 
                   ? `${PROVIDER_DISPLAY_NAMES[(hoveredProvider || selectedProvider) as keyof typeof PROVIDER_DISPLAY_NAMES] || (hoveredProvider || selectedProvider)} Companies` 
                   : "All Companies"} ({displayedCompanies.length})
@@ -333,19 +348,22 @@ export function CloudDependencyExplorer({ onOpenRegions }: CloudDependencyExplor
                     setSelectedProvider(null)
                     setHoveredProvider(null)
                   }} 
-                  className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-xs flex items-center gap-1 transition-colors shadow-md hover:shadow-lg"
+                  className="flex items-center gap-1 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-3 py-1.5 text-xs font-medium text-emerald-100 transition-all hover:border-emerald-400/70 hover:bg-emerald-500/25 hover:text-emerald-50 hover:shadow-[0_15px_35px_rgba(57,255,159,0.25)]"
                 >
                   <X className="h-3 w-3" />
                   Clear Filter
                 </button>
               )}
             </div>
-            <div className="grid grid-cols-6 gap-2 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div className="grid max-h-[400px] grid-cols-6 gap-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#39ff9f33]">
               {displayedCompanies.map((company) => (
                 <div
                   key={company.domain}
-                  className="relative bg-gray-50 rounded-lg p-2 border-2 hover:scale-110 transition-transform cursor-pointer"
-                  style={{ borderColor: COLORS[company.provider as keyof typeof COLORS] }}
+                  className="relative cursor-pointer rounded-lg border bg-[#041812]/80 p-2 transition-transform duration-150 hover:scale-110 hover:shadow-[0_18px_45px_rgba(0,0,0,0.55)]"
+                  style={{
+                    borderColor: COLORS[company.provider as keyof typeof COLORS] || COLORS.Other,
+                    boxShadow: `0 0 20px ${(COLORS[company.provider as keyof typeof COLORS] || COLORS.Other)}33`,
+                  }}
                   title={`${company.name} - ${company.provider}`}
                 >
                   <img

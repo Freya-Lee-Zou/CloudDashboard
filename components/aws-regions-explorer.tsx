@@ -172,20 +172,20 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
 
 
   return (
-    <main className="h-screen w-screen bg-[#0a0a0a] flex overflow-hidden">
+    <main className="h-screen w-screen bg-[#010b13] flex overflow-hidden">
       {/* Sidebar */}
       <div 
-        className="bg-[#111111] border-r border-gray-800 flex flex-col h-screen relative transition-all duration-300"
+        className="bg-[#031a15]/90 backdrop-blur border-r border-emerald-500/20 flex flex-col h-screen relative transition-all duration-300"
         style={{ width: isSidebarCollapsed ? '0px' : `${sidebarWidth}px` }}
       >
         {!isSidebarCollapsed && (
           <>
             {/* Header */}
-            <div className="p-6 border-b border-gray-800">
+            <div className="p-6 border-b border-emerald-500/20 bg-[#041812]/60">
               {onBack && (
                 <button
                   onClick={onBack}
-                  className="mb-3 flex items-center gap-2 text-gray-400 hover:text-white transition-colors group"
+                  className="mb-3 flex items-center gap-2 text-emerald-300/80 hover:text-emerald-100 transition-colors group"
                   title="Back to Cloud Dependencies"
                 >
                   <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,14 +194,14 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                   <span className="text-sm font-medium">Back</span>
                 </button>
               )}
-              <h1 className="text-2xl font-bold text-white mb-2">AWS Regions</h1>
-              <p className="text-gray-400 text-sm">Explore datacenter locations worldwide</p>
+              <h1 className="text-2xl font-bold text-emerald-50 mb-2">AWS Regions</h1>
+              <p className="text-emerald-200/70 text-sm">Explore datacenter locations worldwide</p>
             </div>
 
         {/* Search */}
-        <div className="p-4 border-b border-gray-800">
+        <div className="p-4 border-b border-emerald-500/20 bg-[#031a15]/70">
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -209,16 +209,16 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
               placeholder="Search regions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1a1a1a] border border-gray-700 rounded-lg pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+              className="w-full bg-[#041612]/90 border border-emerald-500/30 rounded-lg pl-10 pr-4 py-3 text-emerald-100 placeholder-emerald-200/40 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40 shadow-[0_20px_50px_rgba(0,0,0,0.45)]"
             />
           </div>
         </div>
 
         {/* Region List */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-[#031a15]/40">
           <div className="p-3">
             {filteredRegions.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
+              <div className="text-center py-12 text-emerald-300/60">
                 {searchQuery ? "No regions found" : "Loading regions..."}
               </div>
             ) : (
@@ -228,35 +228,35 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
                   onClick={(e) => handleRegionClick(region, e)}
                   className={`group w-full text-left p-4 rounded-lg mb-2 transition-all cursor-pointer ${
                     selectedRegions.has(region.code)
-                      ? "bg-cyan-500/20 border border-cyan-500/50 shadow-lg shadow-cyan-500/20"
-                      : "bg-[#1a1a1a] border border-gray-800 hover:border-cyan-500/30 hover:bg-[#1f1f1f] hover:shadow-lg hover:shadow-cyan-500/10"
+                      ? "bg-emerald-500/15 border border-emerald-500/40 shadow-lg shadow-emerald-500/15"
+                      : "bg-[#041612]/90 border border-emerald-500/20 hover:border-emerald-400/30 hover:bg-[#06231b] hover:shadow-lg hover:shadow-emerald-500/10"
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     {region.country && getCountryFlag(region.country) ? (
-                      <div className="w-10 h-10 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center flex-shrink-0 text-2xl group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 bg-gradient-to-br from-emerald-700/30 to-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0 text-2xl group-hover:scale-110 transition-transform">
                         {getCountryFlag(region.country)}
                       </div>
                     ) : (
-                      <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-white mb-1 truncate">{region.name}</div>
+                      <div className="font-semibold text-emerald-50 mb-1 truncate">{region.name}</div>
                       {getAwsRegionId(region) && (
-                        <div className="text-sm text-cyan-400 font-mono mb-0.5">{getAwsRegionId(region)}</div>
+                        <div className="text-sm text-emerald-400 font-mono mb-0.5">{getAwsRegionId(region)}</div>
                       )}
-                      <div className="text-xs text-gray-400 font-mono">{region.code}</div>
+                      <div className="text-xs text-emerald-200/70 font-mono">{region.code}</div>
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
                         setDetailsPanelRegion(region)
                       }}
-                      className="text-gray-400 hover:text-cyan-400 hover:scale-110 transition-all active:scale-95 cursor-pointer"
+                      className="text-emerald-300/80 hover:text-emerald-200 hover:scale-110 transition-all active:scale-95 cursor-pointer"
                       title="View details"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -271,15 +271,15 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
         </div>
 
         {/* Footer Stats */}
-        <div className="p-4 border-t border-gray-800 bg-[#0a0a0a]">
+        <div className="p-4 border-t border-emerald-500/20 bg-[#010b13]">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-400">Total Regions</span>
-            <span className="text-white font-semibold">{regions.length}</span>
+            <span className="text-emerald-200/70">Total Regions</span>
+            <span className="text-emerald-50 font-semibold">{regions.length}</span>
           </div>
           {selectedRegions.size > 0 && (
-            <div className="flex items-center justify-between text-xs mt-2 pt-2 border-t border-gray-800">
-              <span className="text-cyan-400">Selected</span>
-              <span className="text-cyan-400 font-semibold">{selectedRegions.size}</span>
+            <div className="flex items-center justify-between text-xs mt-2 pt-2 border-t border-emerald-500/20">
+              <span className="text-emerald-400">Selected</span>
+              <span className="text-emerald-400 font-semibold">{selectedRegions.size}</span>
             </div>
           )}
         </div>
@@ -298,11 +298,11 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
       {/* Collapse/Expand Button */}
       <button
         onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-        className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-[#111111] hover:bg-cyan-500/20 border border-gray-800 hover:border-cyan-500 rounded-r-lg p-2 transition-all duration-300 group cursor-pointer"
+        className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-[#031a15] hover:bg-emerald-500/15 border border-emerald-500/20 hover:border-emerald-400 rounded-r-lg p-2 transition-all duration-300 group cursor-pointer"
         style={{ left: isSidebarCollapsed ? '0px' : `${sidebarWidth}px` }}
       >
         <svg 
-          className={`w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-all duration-300 ${isSidebarCollapsed ? '' : 'rotate-180'}`} 
+          className={`w-5 h-5 text-emerald-300/80 group-hover:text-emerald-200 transition-all duration-300 ${isSidebarCollapsed ? '' : 'rotate-180'}`} 
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -408,4 +408,3 @@ export function AWSRegionsExplorer({ onBack }: AWSRegionsExplorerProps) {
     </main>
   )
 }
-
